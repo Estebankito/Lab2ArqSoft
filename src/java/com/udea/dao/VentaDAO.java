@@ -8,6 +8,8 @@ package com.udea.dao;
 import com.udea.model.Venta;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -15,14 +17,37 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class VentaDAO implements VentaDAOLocal {
+    @PersistenceContext(unitName = "Lab2ArqSoftPU")
+    private EntityManager em;
+    
 
     @Override
     public void addVenta(Venta venta) {
+        em.persist(venta);
     }
 
     @Override
     public List<Venta> getAllVentas() {
-        return null;
+        return em.createNamedQuery("Venta.getAll").getResultList();
+    }
+
+    @Override
+    public void editVenta(Venta iventa) {
+        em.merge(iventa);
+    }
+
+    @Override
+    public void deleteVenta(int idVenta) {
+        em.remove(getVenta(idVenta));
+    }
+
+    @Override
+    public Venta getVenta(int idVenta) {
+        return em.find(Venta.class, idVenta);
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
     
 }

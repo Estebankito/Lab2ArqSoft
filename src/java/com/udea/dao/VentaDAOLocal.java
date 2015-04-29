@@ -19,5 +19,11 @@ public interface VentaDAOLocal {
     void addVenta(Venta venta);
 
     List<Venta> getAllVentas();
+
+    void editVenta(Venta iventa);
+
+    void deleteVenta(int idVenta);
+
+    Venta getVenta(int idVenta);
     
 }
