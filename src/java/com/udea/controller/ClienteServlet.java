@@ -7,12 +7,13 @@ package com.udea.controller;
 
 import com.udea.dao.ClienteDAOLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -20,35 +21,47 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ClienteServlet extends HttpServlet {
     @EJB
-    private ClienteDAOLocal clienteDAO;
+    private ClienteDAOLocal clienteDAO;   
     
-    
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ClienteServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ClienteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String texto;
+        String nombres = "";
+        String apellidos = "";
+        String correo = "";
+        int telefono = 0;
+        int identificacion = 0;
+        
+        String action = request.getParameter("accion");
+        
+        texto = request.getParameter("identificacion");        
+        if (Validacion.validarNumero(texto)==true) {
+               identificacion = Integer.parseInt(texto);               
         }
+        
+       texto = request.getParameter("nombres");
+        if (Validacion.validarString(texto)==true) {
+            nombres = texto;            
+        }
+        
+        texto = request.getParameter("apellidos");
+        if (Validacion.validarString(texto)==true) {
+            apellidos = texto;
+        }       
+        
+        correo = request.getParameter("correo");
+        
+        texto = request.getParameter("telefono");               
+        if (Validacion.validarNumero(texto)==true) {
+            telefono = Integer.parseInt(texto);
+        }
+        
+       
     }
+    
+   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

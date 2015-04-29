@@ -7,21 +7,23 @@ package com.udea.controller;
 
 import com.udea.dao.VehiculoDAOLocal;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author usuario
  */
 public class VehiculoServlet extends HttpServlet {
+
     @EJB
     private VehiculoDAOLocal vehiculoDAO;
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +37,55 @@ public class VehiculoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VehiculoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VehiculoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        String texto;
+        String matricula;
+        String color;
+        int cantidad = 0;
+        int modelo = 0;
+        Double precio;
+        InputStream inputStream = null;
+           //FOTO*************************************
+
+        matricula = request.getParameter("matricula");
+
+        texto = request.getParameter("modelo");
+        if (Validacion.validarNumero(texto)) {
+            modelo = Integer.parseInt(texto);
         }
+
+        texto = request.getParameter("color");
+        if (Validacion.validarString(texto)) {
+            color = texto;            
+        }
+        
+        texto = request.getParameter("cantidad");
+        if (Validacion.validarNumero(texto)) {
+            cantidad = Integer.parseInt(texto);
+        }
+        
+        texto = request.getParameter("precio");
+        if (Validacion.validarPrecio(texto)) {
+            precio = Double.parseDouble(texto);
+        }
+       
+
+        // Obtener el archivo en partes a traves de una petición Multipart
+        Part filePart = request.getPart("foto");
+
+        if (filePart != null) {
+
+            // Información para Debug
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+
+            // Obtener el InputStream del Archivo Subido
+            inputStream = filePart.getInputStream();
+        }
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
