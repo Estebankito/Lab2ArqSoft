@@ -6,6 +6,7 @@
 package com.udea.controller;
 
 import com.udea.dao.ClienteDAOLocal;
+import com.udea.model.Cliente;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ejb.EJB;
@@ -30,11 +31,12 @@ public class ClienteServlet extends HttpServlet {
         String texto;
         String nombres = "";
         String apellidos = "";
-        String correo = "";
+        String correo;
+        String accion;
         int telefono = 0;
         int identificacion = 0;
         
-        String action = request.getParameter("accion");
+        accion = request.getParameter("accion");
         
         texto = request.getParameter("identificacion");        
         if (Validacion.validarNumero(texto)==true) {
@@ -57,6 +59,24 @@ public class ClienteServlet extends HttpServlet {
         if (Validacion.validarNumero(texto)==true) {
             telefono = Integer.parseInt(texto);
         }
+        
+        Cliente cliente = new Cliente(identificacion, nombres, apellidos, correo, telefono);
+        
+        if ("Add".equalsIgnoreCase(accion)) {
+            clienteDAO.addCliente(cliente);
+        }else if ("Edit".equalsIgnoreCase(accion)) {
+            clienteDAO.editCliente(cliente);
+        }else if ("Delete".equalsIgnoreCase(accion)) {
+            clienteDAO.deleteCliente(identificacion);
+        }else if ("Search".equalsIgnoreCase(accion)){
+            clienteDAO.getCliente(identificacion);
+        }
+        
+        request.setAttribute("cliente", cliente);
+        request.setAttribute("AllClientes", clienteDAO.getAllClientes());
+        
+        // CAMBIAR PARAMETRO POR jsp CORRESPONDIENTE
+        request.getRequestDispatcher("ABCDEF.jsp").forward(request, response);
         
        
     }

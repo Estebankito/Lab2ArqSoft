@@ -6,6 +6,7 @@
 package com.udea.controller;
 
 import com.udea.dao.VentaDAOLocal;
+import com.udea.model.Venta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -35,6 +36,59 @@ public class VentaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        String accion;
+        String texto;
+        String nroFactura="";
+        int idCliente=0;
+        String idVehiculo="";
+        int cantidad=0;
+        Double precioTotal=0.0;
+        
+        accion = request.getParameter("accion");
+        
+        texto = request.getParameter("nroFactura");
+        if (Validacion.validarString(texto) == true) {
+            nroFactura = texto;            
+        }
+        
+        texto = request.getParameter("idCliente");
+        if (Validacion.validarNumero(texto) == true) {
+            idCliente = Integer.parseInt(texto);            
+        }
+        
+        texto = request.getParameter("idVehiculo");
+        if (Validacion.validarString(texto)) {
+            idVehiculo = texto;            
+        }
+        
+        texto = request.getParameter("cantidad");
+        if (Validacion.validarNumero(texto)) {
+            cantidad = Integer.parseInt(texto);            
+        }
+        
+        texto = request.getParameter("precioTotal");
+        if (Validacion.validarPrecio(texto)) {
+            precioTotal = Double.parseDouble(texto);            
+        }
+        
+        Venta venta = new Venta(nroFactura, idCliente, idVehiculo, cantidad, precioTotal);
+        
+        if ("Add".equalsIgnoreCase(accion)) {
+            ventaDAO.addVenta(venta);
+        }else if ("Edit".equalsIgnoreCase(accion)) {
+            ventaDAO.editVenta(venta);            
+        }else if ("Delete".equalsIgnoreCase(accion)) {
+            ventaDAO.deleteVenta(nroFactura);            
+        }else if ("Search".equalsIgnoreCase(accion)) {
+            ventaDAO.getVenta(nroFactura);
+        }
+        
+        request.setAttribute("venta", venta);
+        request.setAttribute("AllVentas", ventaDAO.getAllVentas());
+        
+        // CAMBIAR PARAMETRO POR jsp CORRESPONDIENTE
+        request.getRequestDispatcher("ABCDEF.jsp").forward(request, response);
         
     }
 

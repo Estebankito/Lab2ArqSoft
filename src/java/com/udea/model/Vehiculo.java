@@ -30,7 +30,7 @@ public class Vehiculo implements Serializable {
 @Column
 private String matricula;
 @Column
-private String modelo;
+private int modelo;
 @Column
 private String color;
 @Column
@@ -43,7 +43,7 @@ private Blob foto;
     public Vehiculo() {
     }   
 
-    public Vehiculo(String matricula, String modelo, String color, int cantidad, Double precio, Blob foto) {
+    public Vehiculo(String matricula, int modelo, String color, int cantidad, Double precio, Blob foto) {
         this.matricula = matricula;
         this.modelo = modelo;
         this.color = color;
@@ -60,11 +60,11 @@ private Blob foto;
         this.matricula = matricula;
     }
 
-    public String getModelo() {
+    public int getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo) {
+    public void setModelo(int modelo) {
         this.modelo = modelo;
     }
 

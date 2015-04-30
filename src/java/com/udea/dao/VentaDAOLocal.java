@@ -22,8 +22,8 @@ public interface VentaDAOLocal {
 
     void editVenta(Venta iventa);
 
-    void deleteVenta(int idVenta);
+    void deleteVenta(String idVenta);
 
-    Venta getVenta(int idVenta);
+    Venta getVenta(String idVenta);
     
 }

@@ -32,12 +32,12 @@ public class VehiculoDAO implements VehiculoDAOLocal {
     }
 
     @Override
-    public void deleteVehiculo(int idVehiculo) {
+    public void deleteVehiculo(String idVehiculo) {
         em.remove(getVehiculo(idVehiculo));
     }
 
     @Override
-    public Vehiculo getVehiculo(int idVehiculo) {
+    public Vehiculo getVehiculo(String idVehiculo) {
         return em.find(Vehiculo.class, idVehiculo);
     }
 

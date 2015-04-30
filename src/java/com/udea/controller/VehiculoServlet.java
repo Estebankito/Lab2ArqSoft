@@ -6,11 +6,14 @@
 package com.udea.controller;
 
 import com.udea.dao.VehiculoDAOLocal;
+import com.udea.model.Vehiculo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ import javax.servlet.http.Part;
  *
  * @author usuario
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class VehiculoServlet extends HttpServlet {
 
     @EJB
@@ -40,13 +44,17 @@ public class VehiculoServlet extends HttpServlet {
 
         String texto;
         String matricula;
-        String color;
+        String accion;
+        String color = "";
         int cantidad = 0;
         int modelo = 0;
-        Double precio;
+        Double precio = 0.0;
         InputStream inputStream = null;
-           //FOTO*************************************
-
+        
+        //Capturamos los valores de los campos en la vista
+        
+        accion = request.getParameter("accion");
+        
         matricula = request.getParameter("matricula");
 
         texto = request.getParameter("modelo");
@@ -70,7 +78,7 @@ public class VehiculoServlet extends HttpServlet {
         }
        
 
-        // Obtener el archivo en partes a traves de una petición Multipart
+        // Obtenemos el archivo en partes a través de una petición Multipart
         Part filePart = request.getPart("foto");
 
         if (filePart != null) {
@@ -82,8 +90,26 @@ public class VehiculoServlet extends HttpServlet {
 
             // Obtener el InputStream del Archivo Subido
             inputStream = filePart.getInputStream();
+        
+        }    
+            Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, (Blob) inputStream);
+           
+        
+        if ("Add".equalsIgnoreCase(accion)) {
+            vehiculoDAO.addVehiculo(vehiculo);
+        }else if ("Edit".equalsIgnoreCase(accion)) {
+            vehiculoDAO.editVehiculo(vehiculo);
+        }else if ("Delete".equalsIgnoreCase(accion)) {
+            vehiculoDAO.deleteVehiculo(matricula);
+        }else if ("Search".equalsIgnoreCase(accion)) {
+            vehiculoDAO.getVehiculo(matricula);
         }
         
+        request.setAttribute("vehiculo", vehiculo);
+        request.setAttribute("AllVehiculos", vehiculoDAO.getAllVehiculos());
+        
+        // CAMBIAR PARAMETRO POR jsp CORRESPONDIENTE
+        request.getRequestDispatcher("ABCDEF.jsp").forward(request, response);
         
         
     }

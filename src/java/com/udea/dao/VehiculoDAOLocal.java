@@ -20,9 +20,9 @@ public interface VehiculoDAOLocal {
 
     void editVehiculo(Vehiculo vehiculo);
 
-    void deleteVehiculo(int idVehiculo);
+    void deleteVehiculo(String idVehiculo);
 
-    Vehiculo getVehiculo(int idVehiculo);
+    Vehiculo getVehiculo(String idVehiculo);
 
     List<Vehiculo> getAllVehiculos();
     

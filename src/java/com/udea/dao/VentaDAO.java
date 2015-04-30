@@ -37,12 +37,12 @@ public class VentaDAO implements VentaDAOLocal {
     }
 
     @Override
-    public void deleteVenta(int idVenta) {
+    public void deleteVenta(String idVenta) {
         em.remove(getVenta(idVenta));
     }
 
     @Override
-    public Venta getVenta(int idVenta) {
+    public Venta getVenta(String idVenta) {
         return em.find(Venta.class, idVenta);
     }
 

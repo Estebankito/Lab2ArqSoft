@@ -35,12 +35,12 @@ public class Cliente implements Serializable{
     @Column
     private String correo;
     @Column
-    private String telefono;
+    private int telefono;
 
     public Cliente() {
     }    
     
-    public Cliente(int identificacion, String nombres, String apellidos, String correo, String telefono) {
+    public Cliente(int identificacion, String nombres, String apellidos, String correo, int telefono) {
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -80,11 +80,11 @@ public class Cliente implements Serializable{
         this.correo = correo;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
     
