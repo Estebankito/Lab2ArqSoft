@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/04/2015, 06:42:41 PM
+    Author     : jedisson.tapias
+*/
+@import url(http://fonts.googleapis.com/css?family=Merriweather);
+
+.titulo{
+//background:black;
+border-radius: 20px 20px 20px 20px;
+-moz-border-radius: 20px 20px 20px 20px;
+-webkit-border-radius: 20px 20px 20px 20px;
+border: 5px solid #000000;
+margin-left: 10%;
+margin-right:10%; 
+margin-top:5%;
+background-image: url('../resources/textura-titulo.jpg');
+background-repeat: no-repeat;
+background-position: top right;
+height: 50px;
+    //width: 10px;
+    
+color: #fff;
+text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px rgb(94,119,160), 0 0 30px rgb(94,119,160), 0 0 40px rgb(94,119,160), 0 0 50px rgb(94,119,160), 0 0 75px rgb(94,119,160);
+letter-spacing: 10px;
+font-size: 40px;
+font-family: 'Merriweather', serif;
+transition: all 0.2s ease;
+animation: down-bump 0.4s ease;
+//background: #000;
+}
+.titulo:hover{
+    //background:black;
+    color: #474747;
+    letter-spacing: 14px;
+    border: 5px solid #474747;
+    animation: up-bump 0.4s ease;
+    background: linear-gradient(
+     white, white 50%, #333 50%, #333
+  );
+}
+
+

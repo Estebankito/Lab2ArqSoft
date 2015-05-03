@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/04/2015, 07:49:49 PM
+    Author     : jedisson.tapias
+*/
+.contenedor1{
+position:relative;
+float: left;
+height:500px;
+width: 25%;
+background: rgba(0, 0, 0, .5);
+font: 30px Tahoma, Helvetica, Arial, Sans-Serif;
+
+transition: all 0.2s ease;
+animation: down-bump 0.4s ease;
+}
+
+.contenedor1:hover{
+    font-size: 35px;
+  background-position: 100% 100%;
+ // background: linear-gradient(
+   //  white, white 50%, #333 50%, #333);
+  background: rgba(0, 0, 0, .8);
+  animation: up-bump 0.4s ease;
+}
+
+a{
+    //text-decoration: none;
+    color: white;
+    
+}
+
+@keyframes up-bump {
+  0% { padding-top: 2em; }
+  50% { padding-top: 1.5em; }
+  100% { padding-top: 2em; }
+}
+@keyframes down-bump {
+  0% { padding-top: 2em; }
+  50% { padding-top: 2.5em; }
+  100% { padding-top: 2em; }
+}
